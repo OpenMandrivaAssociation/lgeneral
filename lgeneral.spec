@@ -14,7 +14,7 @@ Patch0:		%{name}-1.1.1-reset-player.patch.bz2
 License:	GPL
 Group:		Games/Strategy
 Summary:	%{Summary}
-BuildRequires:	SDL_mixer-devel XFree86-devel nas-devel smpeg-devel oggvorbis-devel
+BuildRequires:	SDL_mixer-devel X11-devel nas-devel smpeg-devel oggvorbis-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
