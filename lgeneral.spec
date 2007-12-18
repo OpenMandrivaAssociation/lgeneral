@@ -37,14 +37,15 @@ implementations contribute to the tactical and strategic depth of the game.
 %{makeinstall_std}
 (cd %{name}-data-%{dvers}; %makeinstall_std)
 
-%{__install} -d $RPM_BUILD_ROOT%{_menudir}
-%{__cat} <<EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}):command="%{_gamesbindir}/%{name}" \
-		icon=%{name}.png \
-		needs="x11" \
-		section="More Applications/Games/Strategy" \
-		title="LGeneral"\
-		longtitle="%{Summary}"
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications/
+cat << EOF > %buildroot%{_datadir}/applications/mandriva-%{name}.desktop
+[Desktop Entry]
+Type=Application
+Exec=%{_gamesbindir}/%{name}		
+Icon=%{name}				
+Categories=Game;StrategyGame;		
+Name=LGeneral		
+Comment=%{Summary}
 EOF
 
 %{__install} -m644 %{name}16.png -D $RPM_BUILD_ROOT%{_miconsdir}/%{name}.png
@@ -67,7 +68,7 @@ EOF
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
-%{_menudir}/%{name}
+%{_datadir}/applications/mandriva-%{name}.desktop
 %{_mandir}/man[16]/*
 %defattr(755,root,root,755)
 %{_gamesbindir}/*
