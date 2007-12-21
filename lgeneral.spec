@@ -15,6 +15,7 @@ License:	GPL
 Group:		Games/Strategy
 Summary:	%{Summary}
 BuildRequires:	SDL_mixer-devel X11-devel nas-devel smpeg-devel oggvorbis-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 LGeneral is a turn-based strategy engine heavily inspired by Panzer General.
