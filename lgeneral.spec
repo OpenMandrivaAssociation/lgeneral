@@ -1,7 +1,7 @@
 %define	name	lgeneral
 %define	version	1.2
 %define	dvers	1.1.3
-%define	release	0.beta10.1
+%define	release	0.beta10.2
 %define	Summary	A Panzer General clone
 
 Name:		%{name}
@@ -11,7 +11,7 @@ URL:		http://lgames.sourceforge.net/index.php?project=LGeneral
 Source0:	%{name}-%{version}beta-2.tar.bz2
 Source1:	%{name}-data-%{dvers}.tar.bz2
 Patch0:		%{name}-1.1.1-reset-player.patch.bz2
-License:	GPL
+License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
 BuildRequires:	SDL_mixer-devel X11-devel nas-devel smpeg-devel oggvorbis-devel
@@ -45,7 +45,7 @@ Type=Application
 Exec=%{_gamesbindir}/%{name}		
 Icon=%{name}				
 Categories=Game;StrategyGame;		
-Name=LGeneral		
+Name=LGeneral
 Comment=%{Summary}
 EOF
 
