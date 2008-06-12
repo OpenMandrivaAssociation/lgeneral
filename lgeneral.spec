@@ -53,11 +53,15 @@ EOF
 %{__install} -m644 %{name}32.png -D $RPM_BUILD_ROOT%{_iconsdir}/%{name}.png
 %{__install} -m644 %{name}48.png -D $RPM_BUILD_ROOT%{_liconsdir}/%{name}.png
 
+%if %mdkversion < 200900
 %post
 %update_menus
+%endif
 
+%if %mdkversion < 200900
 %postun
 %clean_menus
+%endif
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
