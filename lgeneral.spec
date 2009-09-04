@@ -1,7 +1,7 @@
 %define	name	lgeneral
 %define	version	1.2
 %define	dvers	1.1.3
-%define	release	0.beta10.2
+%define	release	0.beta10.3
 %define	Summary	A Panzer General clone
 
 Name:		%{name}
