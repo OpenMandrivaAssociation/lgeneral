@@ -1,21 +1,29 @@
 %define	name	lgeneral
 %define	version	1.2
-%define	dvers	1.1.3
-%define	release	0.beta10.3
+%define	release	%mkrel 1
 %define	Summary	A Panzer General clone
 
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel %{release}
+Summary:	%{Summary}
+Release:	%{release}
 URL:		http://lgames.sourceforge.net/index.php?project=LGeneral
-Source0:	%{name}-%{version}beta-2.tar.bz2
-Source1:	%{name}-data-%{dvers}.tar.bz2
-Patch0:		%{name}-1.1.1-reset-player.patch.bz2
+Source0:	http://prdownloads.sourceforge.net/lgeneral/%{name}-%{version}.tar.gz
+Source1:	http://prdownloads.sourceforge.net/lgeneral/pg-data.tar.gz
+Patch0:     lgeneral-1.2-fix-format-errors.patch
+Patch1:     lgeneral-1.2-as-needed.patch
+Patch2:     lgeneral-1.2-build.patch
+Patch3:     lgeneral-1.2_beta13-make-382.patch
+Patch4:     lgeneral-1.2-make-lgc-pg-buildroot-aware.patch
 License:	GPLv2+
 Group:		Games/Strategy
-Summary:	%{Summary}
-BuildRequires:	SDL_mixer-devel X11-devel nas-devel smpeg-devel oggvorbis-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	SDL_mixer-devel
+BuildRequires:	X11-devel
+BuildRequires:	nas-devel
+BuildRequires:	smpeg-devel
+BuildRequires:	oggvorbis-devel
+BuildRequires:	x11-server-xvfb
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 
 %description
 LGeneral is a turn-based strategy engine heavily inspired by Panzer General.
@@ -25,33 +33,29 @@ contacts, surrender, unit supply, weather influence, reinforcements and other
 implementations contribute to the tactical and strategic depth of the game.
  
 %prep
-%setup -q -a1 -n %{name}-%{version}beta-2
-%patch0 -p1 -b .peroyvind
+%setup -q -a1
+%patch0 -p 1
+%patch1 -p 1
+%patch2 -p 1
+%patch3 -p 0
+%patch4 -p 1
+cp /usr/share/gettext/config.rpath .
+autoreconf -i -f
 
 %build
 %configure2_5x	--bindir=%{_gamesbindir}
-%make CFLAGS="$RPM_OPT_FLAGS `sdl-config --cflags`"
-(cd %{name}-data-%{dvers}; %configure)
+%__make CFLAGS="$RPM_OPT_FLAGS `sdl-config --cflags`"
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
+%{__rm} -rf %{buildroot}
 %{makeinstall_std}
-(cd %{name}-data-%{dvers}; %makeinstall_std)
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications/
-cat << EOF > %buildroot%{_datadir}/applications/mandriva-%{name}.desktop
-[Desktop Entry]
-Type=Application
-Exec=%{_gamesbindir}/%{name}		
-Icon=%{name}				
-Categories=Game;StrategyGame;		
-Name=LGeneral
-Comment=%{Summary}
-EOF
+%find_lang lgeneral
+%find_lang pg
+cat lgeneral.lang pg.lang > all.lang
 
-%{__install} -m644 %{name}16.png -D $RPM_BUILD_ROOT%{_miconsdir}/%{name}.png
-%{__install} -m644 %{name}32.png -D $RPM_BUILD_ROOT%{_iconsdir}/%{name}.png
-%{__install} -m644 %{name}48.png -D $RPM_BUILD_ROOT%{_liconsdir}/%{name}.png
+# install data files
+xvfb-run lgc-pg/lgc-pg -s pg-data -d %{buildroot}%{_gamesdatadir}/lgeneral
 
 %if %mdkversion < 200900
 %post
@@ -64,17 +68,14 @@ EOF
 %endif
 
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+%{__rm} -rf %{buildroot}
 
-%files
-%defattr(644,root,root,755)
+%files -f all.lang
+%defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS README* TODO
 %{_gamesdatadir}/%{name}
-%{_iconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
-%{_miconsdir}/%{name}.png
-%{_datadir}/applications/mandriva-%{name}.desktop
+%{_iconsdir}/%{name}48.png
+%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man[16]/*
-%defattr(755,root,root,755)
 %{_gamesbindir}/*
 
