@@ -23,6 +23,7 @@ BuildRequires:	nas-devel
 BuildRequires:	smpeg-devel
 BuildRequires:	oggvorbis-devel
 BuildRequires:	x11-server-xvfb
+BuildRequires:	gettext-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 
 %description
