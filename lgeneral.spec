@@ -1,6 +1,6 @@
 %define	name	lgeneral
 %define	version	1.2.2
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 %define	Summary	A Panzer General clone
 
 Name:		%{name}
@@ -18,6 +18,7 @@ BuildRequires:	SDL_mixer-devel
 BuildRequires:	SDL-devel
 BuildRequires:	gettext-devel
 BuildRequires:	x11-server-xvfb
+BuildRequires:	desktop-file-utils
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 
 %description
@@ -44,6 +45,12 @@ autoreconf -fi
 
 %__mv %{buildroot}%{_gamesdatadir}/applications %{buildroot}%{_datadir}/
 %__mv %{buildroot}%{_gamesdatadir}/icons %{buildroot}%{_datadir}/
+
+desktop-file-install	--dir %{buildroot}%{_datadir}/applications \
+			--add-category="StrategyGame" \
+			%{buildroot}%{_datadir}/applications/%{name}.desktop
+
+%__sed -i s,Icon=.*,Icon=lgeneral48, %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %if %{mdvver} <= 201100
 %find_lang %{name} lgeneral pg
