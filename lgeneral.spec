@@ -1,12 +1,7 @@
-%define	name	lgeneral
-%define	version	1.2.2
-%define	release	%mkrel 2
-%define	Summary	A Panzer General clone
-
-Name:		%{name}
-Version:	%{version}
-Summary:	%{Summary}
-Release:	%{release}
+Name:		lgeneral
+Version:	1.2.3
+Release:	%mkrel 1
+Summary:	A Panzer General clone
 URL:		http://lgames.sourceforge.net/index.php?project=LGeneral
 Source0:	http://prdownloads.sourceforge.net/lgeneral/%{name}-%{version}.tar.gz
 Source1:	http://prdownloads.sourceforge.net/lgeneral/pg-data.tar.gz
@@ -19,7 +14,6 @@ BuildRequires:	SDL-devel
 BuildRequires:	gettext-devel
 BuildRequires:	x11-server-xvfb
 BuildRequires:	desktop-file-utils
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 
 %description
 LGeneral is a turn-based strategy engine heavily inspired by Panzer General.
@@ -34,7 +28,7 @@ implementations contribute to the tactical and strategic depth of the game.
 %patch4 -p1
 
 %build
-cp /usr/share/gettext/config.rpath .
+%__cp /usr/share/gettext/config.rpath .
 autoreconf -fi
 %configure2_5x	--bindir=%{_gamesbindir} --datadir=%{_gamesdatadir}
 %make
@@ -65,7 +59,6 @@ xvfb-run lgc-pg/lgc-pg -s pg-data -d %{buildroot}%{_gamesdatadir}/lgeneral
 %__rm -rf %{buildroot}
 
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS README* TODO
 %{_gamesdatadir}/%{name}
 %{_iconsdir}/%{name}48.png
