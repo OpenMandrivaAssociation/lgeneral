@@ -1,0 +1,15 @@
+diff -Naur -x '*~' lgeneral-1.2/lgc-pg/misc.c lgeneral-1.2-make-lgc-pg-buildroot-aware//lgc-pg/misc.c
+--- lgeneral-1.2/lgc-pg/misc.c	2010-09-28 09:34:02.000000000 +0000
++++ lgeneral-1.2-make-lgc-pg-buildroot-aware//lgc-pg/misc.c	2010-11-27 21:25:26.000000000 +0000
+@@ -405,7 +405,10 @@
+     return ".";
+ #else
+     static char gamedir[MAXPATHLEN];
+-    snprintf( gamedir, MAXPATHLEN, "%s", INSTALLDIR );
++    if (getenv("RPM_BUILD_ROOT")) 
++        snprintf( gamedir, MAXPATHLEN, "%s/%s", getenv("RPM_BUILD_ROOT"), INSTALLDIR );
++    else
++        snprintf( gamedir, MAXPATHLEN, "%s", INSTALLDIR );
+     return gamedir;
+ #endif
+ }
