@@ -1,7 +1,7 @@
 Name:		lgeneral
 Version:	1.2.3
 Summary:	A Panzer General clone
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://lgames.sourceforge.net/index.php?project=LGeneral
