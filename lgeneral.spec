@@ -4,7 +4,7 @@ Summary:	A Panzer General clone
 Release:	2
 License:	GPLv2+
 Group:		Games/Strategy
-URL:		http://lgames.sourceforge.net/index.php?project=LGeneral
+URL:		https://lgames.sourceforge.net/index.php?project=LGeneral
 Source0:	http://prdownloads.sourceforge.net/lgeneral/%{name}-%{version}.tar.gz
 Source1:	http://prdownloads.sourceforge.net/lgeneral/pg-data.tar.gz
 Patch0:		lgeneral-1.2.2-fix-format-errors.patch
